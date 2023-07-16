@@ -33,6 +33,32 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpenseDate() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      //error message
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('無効入力。 もう一度試してください。',style: TextStyle(fontSize: 24),),
+          content: const Text('有効なタイトル金額の日付とカテゴリが入力されていることを確認してください。'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -87,49 +113,49 @@ class _NewExpenseState extends State<NewExpense> {
               )
             ],
           ),
-         const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton(
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 8,
-                  style: const TextStyle(color: Colors.black87),
-                  underline: Container(
-                    color: Colors.black54,
-                    height: 1,
-                  ),
-                  value: _selectedCategory,
-                    items: Category.values.map(
-                      (category) => DropdownMenuItem(
-                        value: category,
-                        child: Text(
-                          category.name.toUpperCase(),
-                        ),
-                      ),
-                    ).toList(),
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 8,
+                    style: const TextStyle(color: Colors.black87),
+                    underline: Container(
+                      color: Colors.black54,
+                      height: 1,
+                    ),
+                    value: _selectedCategory,
+                    items: Category.values
+                        .map(
+                          (category) => DropdownMenuItem(
+                            value: category,
+                            child: Text(
+                              category.name.toUpperCase(),
+                            ),
+                          ),
+                        )
+                        .toList(),
                     onChanged: (value) {
-                    setState(() {
-                      if(value == null) {
-                        return;
-                      }
-                      _selectedCategory = value;
-                    });
+                      setState(() {
+                        if (value == null) {
+                          return;
+                        }
+                        _selectedCategory = value;
+                      });
                     }),
               ),
-                  const Spacer(),
+              const Spacer(),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: const Text('キャンセル')),
               ElevatedButton(
-                  onPressed: () {
-                    print(_titleController.text);
-                    print(_amountController.text);
-                  },
-                  child: const Text("保存"))
+                  onPressed: _submitExpenseDate, child: const Text("保存"))
             ],
           )
         ],
