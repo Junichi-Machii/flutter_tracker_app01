@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tracker_app/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -43,7 +45,9 @@ class _NewExpenseState extends State<NewExpense> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('無効入力。 もう一度試してください。',style: TextStyle(fontSize: 24),),
+          title: const Text(
+            '無効入力。 もう一度試してください。',
+          ),
           content: const Text('有効なタイトル金額の日付とカテゴリが入力されていることを確認してください。'),
           actions: [
             TextButton(
@@ -57,6 +61,16 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -69,7 +83,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16,48,16,16),
       child: Column(
         children: [
           TextField(
