@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tracker_app/models/expense.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseItem extends StatelessWidget {
-  const ExpenseItem(this.expense, {super.key});
+   ExpenseItem(this.expense, {super.key});
 
   final Expense expense;
+
+  final amountFormatter = NumberFormat("#,###");
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class ExpenseItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text('\$${expense.amount.toStringAsFixed(2)}'),
+                Text('¥${amountFormatter.format(expense.amount)}'),
                 const Spacer(),
                 Row(
                   children: [

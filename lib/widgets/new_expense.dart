@@ -36,7 +36,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   void _submitExpenseDate() {
-    final enteredAmount = double.tryParse(_amountController.text);
+    final enteredAmount = int.tryParse(_amountController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
