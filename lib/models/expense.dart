@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
-final formatter = DateFormat.yMd();
+final formatter =  DateFormat('yyyy-MM-dd');
+
 
 const uuid = Uuid();
 
@@ -25,9 +26,12 @@ class Expense {
 
   final String id;
   final String title;
-  final double amount;
+  final int amount;
   final DateTime date;
   final Category category;
+
+
+  
 
   String get formattedDate {
     return formatter.format(date);

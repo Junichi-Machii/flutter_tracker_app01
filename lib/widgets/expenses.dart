@@ -15,12 +15,12 @@ class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
         title: 'flutter',
-        amount: 19.99,
+        amount: 90000,
         date: DateTime.now(),
         category: Category.work),
     Expense(
         title: 'cinema',
-        amount: 29.99,
+        amount: 90000,
         date: DateTime.now(),
         category: Category.leisure),
   ];
@@ -47,7 +47,7 @@ class _ExpensesState extends State<Expenses> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 4),
         content: const Text('削除しました。'),
         action: SnackBarAction(
           label: '元に戻す',
