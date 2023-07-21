@@ -7,6 +7,7 @@ class ExpenseItem extends StatelessWidget {
 
   final Expense expense;
 
+//金額をカンマ区切りに表示
   final amountFormatter = NumberFormat("#,###");
 
 

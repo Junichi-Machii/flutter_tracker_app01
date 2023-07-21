@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tracker_app/widgets/expenses_list/expenses_list.dart';
 import 'package:tracker_app/models/expense.dart';
 import 'package:tracker_app/widgets/new_expense.dart';
+import 'package:tracker_app/widgets/chart/chart.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -73,6 +74,8 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
       appBar: AppBar(
+        title: const Text('家計簿アプリ'),
+        centerTitle: true,
         actions: [
           IconButton(onPressed: _openAddExpensesModal, icon: Icon(Icons.add))
         ],
@@ -81,7 +84,14 @@ class _ExpensesState extends State<Expenses> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('家計簿アプリ'),
+            Chart(expenses: _registeredExpenses),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                '経費',
+                style: TextStyle(),
+              ),
+            ),
             Expanded(
               child: mainContent,
             )
