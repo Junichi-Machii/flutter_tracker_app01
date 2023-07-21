@@ -83,7 +83,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16,48,16,16),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -137,11 +137,6 @@ class _NewExpenseState extends State<NewExpense> {
                 child: DropdownButton(
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 8,
-                    style: const TextStyle(color: Colors.black87),
-                    underline: Container(
-                      color: Colors.black54,
-                      height: 1,
-                    ),
                     value: _selectedCategory,
                     items: Category.values
                         .map(
