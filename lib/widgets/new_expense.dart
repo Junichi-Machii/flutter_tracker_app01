@@ -82,92 +82,98 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text('Title'),
-            ),
-            keyboardType: TextInputType.text,
-          ),
-          Row(
+   final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding:  EdgeInsets.fromLTRB(16, 48, 16, keyboardSpace + 16),
+          child: Column(
             children: [
-              Expanded(
-                child: TextField(
-                  controller: _amountController,
-                  decoration: const InputDecoration(
-                    prefixText: '¥ ',
-                    label: Text('金額'),
-                  ),
-                  keyboardType: TextInputType.number,
+              TextField(
+                controller: _titleController,
+                maxLength: 50,
+                decoration: const InputDecoration(
+                  label: Text('Title'),
                 ),
+                keyboardType: TextInputType.text,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _amountController,
+                      decoration: const InputDecoration(
+                        prefixText: '¥ ',
+                        label: Text('金額'),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          _selectedDate == null
+                              ? '日付を選択'
+                              : formatter.format(_selectedDate!),
+                        ),
+                        IconButton(
+                          onPressed: _presetDatePicker,
+                          icon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
-                width: 16,
+                height: 16,
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      _selectedDate == null
-                          ? '日付を選択'
-                          : formatter.format(_selectedDate!),
-                    ),
-                    IconButton(
-                      onPressed: _presetDatePicker,
-                      icon: const Icon(Icons.calendar_month),
-                    ),
-                  ],
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton(
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 8,
+                        value: _selectedCategory,
+                        items: Category.values
+                            .map(
+                              (category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(
+                                  category.name.toUpperCase(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            if (value == null) {
+                              return;
+                            }
+                            _selectedCategory = value;
+                          });
+                        }),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('キャンセル')),
+                  ElevatedButton(
+                      onPressed: _submitExpenseDate, child: const Text("保存"))
+                ],
               )
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton(
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 8,
-                    value: _selectedCategory,
-                    items: Category.values
-                        .map(
-                          (category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(
-                              category.name.toUpperCase(),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        if (value == null) {
-                          return;
-                        }
-                        _selectedCategory = value;
-                      });
-                    }),
-              ),
-              const Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('キャンセル')),
-              ElevatedButton(
-                  onPressed: _submitExpenseDate, child: const Text("保存"))
-            ],
-          )
-        ],
+        ),
       ),
     );
   }

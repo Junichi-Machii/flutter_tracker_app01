@@ -28,6 +28,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpensesModal() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
@@ -64,6 +65,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text('経費が見つかりません。追加してください。'),
     );
@@ -80,24 +83,40 @@ class _ExpensesState extends State<Expenses> {
           IconButton(onPressed: _openAddExpensesModal, icon: Icon(Icons.add))
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Chart(expenses: _registeredExpenses),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                '経費',
-                style: TextStyle(),
+      body: width < 600
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Chart(expenses: _registeredExpenses),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '経費',
+                      style: TextStyle(),
+                    ),
+                  ),
+                  Expanded(
+                    child: mainContent,
+                  )
+                ],
               ),
-            ),
-            Expanded(
-              child: mainContent,
             )
-          ],
-        ),
-      ),
+          : Row(
+              children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    '経費',
+                    style: TextStyle(),
+                  ),
+                ),
+                Expanded(
+                  child: mainContent,
+                )
+              ],
+            ),
     );
   }
 }
