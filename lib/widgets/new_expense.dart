@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -36,13 +39,25 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
-  void _submitExpenseDate() {
-    final enteredAmount = int.tryParse(_amountController.text);
-    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _selectedDate == null) {
-      //error message
+  void _showDialog() {
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+          context: context,
+          builder: (ctx) => CupertinoAlertDialog(
+                title: const Text(
+                  '無効入力。 もう一度試してください。',
+                ),
+                content: const Text('有効なタイトル金額の日付とカテゴリが入力されていることを確認してください。'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              ));
+    } else {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -60,6 +75,16 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
       );
+    }
+  }
+
+  void _submitExpenseDate() {
+    final enteredAmount = int.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      _showDialog();
       return;
     }
 
