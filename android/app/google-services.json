@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "634760010285",
+    "project_id": "flutter-app-expenses01",
+    "storage_bucket": "flutter-app-expenses01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634760010285:android:f96b72de3d28165acc76a4",
+        "android_client_info": {
+          "package_name": "com.example.tracker_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634760010285-s5hs6cekqgmv517lu9iv7s1v13vvb3md.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp_fH-Q1z0nwyFBYkWIZtQb1xt_genQSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634760010285-s5hs6cekqgmv517lu9iv7s1v13vvb3md.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
