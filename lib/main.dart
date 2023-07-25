@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'package:tracker_app/widgets/expenses.dart';
 
@@ -12,13 +14,10 @@ var kDarkColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 4, 88, 189),
 );
 
-void main(List<String> args) {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  // ]).then((value) {
-
-  // });
+void main(List<String> args)  async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
   runApp(MaterialApp(
     darkTheme: ThemeData.dark().copyWith(
       useMaterial3: true,
@@ -30,12 +29,12 @@ void main(List<String> args) {
         ),
       ),
       cardTheme: const CardTheme().copyWith(
-          color: kDarkColorScheme.onPrimary,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
+        color: kDarkColorScheme.onPrimary,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
         ),
+      ),
     ),
     theme: ThemeData().copyWith(
         useMaterial3: true,

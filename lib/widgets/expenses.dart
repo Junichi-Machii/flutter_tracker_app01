@@ -77,7 +77,7 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('家計簿アプリ'),
+        title: const Text('家計簿'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: _openAddExpensesModal, icon: Icon(Icons.add))
